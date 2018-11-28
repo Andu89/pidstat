@@ -1,12 +1,21 @@
 #Makefile to build pidstat commands for android (arch-arm64)
 SRC_DIR = $(shell pwd)
-COMPILE = ${SRC_DIR}/tools/aarch64-linux-android-4.9/bin
-CC = ${COMPILE}/aarch64-linux-android-gcc
-AR = ${COMPILE}/aarch64-linux-android-ar
-NDK_SYSROOT=${SRC_DIR}/tools/ndk
+#64bit
+#COMPILE = ${SRC_DIR}/tools/aarch64-linux-android-4.9/bin
+#CC = ${COMPILE}/aarch64-linux-android-gcc
+#AR = ${COMPILE}/aarch64-linux-android-ar
+#NDK_SYSROOT=${SRC_DIR}/tools/ndk
+
+#32bit
+COMPILE = ${SRC_DIR}/tools/arm-linux-androideabi-4.9/bin
+CC = ${COMPILE}/arm-linux-androideabi-gcc
+AR = ${COMPILE}/arm-linux-androideabi-gcc-ar
+NDK_SYSROOT=${SRC_DIR}/tools/ndk2
+
 CFLAGS = -g -O2 -Wall -Wstrict-prototypes -pipe -O2 
 CFLAGS += --sysroot=${NDK_SYSROOT}
 CFLAGS += -pie -fPIE
+#CFLAGS = --sysroot=${NDK_SYSROOT}
 ALL: pidstat mpstat iostat
 commom.o: common.c version.h common.h ioconf.h sysconfig.h
 	$(CC) -o $@ -c $(CFLAGS) $<
